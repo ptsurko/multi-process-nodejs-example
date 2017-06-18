@@ -1,6 +1,6 @@
 'use strict'
 
-const trace = require('@risingstack/trace')
+// const trace = require('@risingstack/trace')
 const joi = require('joi')
 const logger = require('winston')
 const config = require('../../config')
@@ -32,7 +32,7 @@ tortoise
     redis.zadd(redis.SET.tweets, value.createdAt.getTime(), JSON.stringify(msg))
       .then(() => {
         logger.debug('Social preprocessor save success', { msg })
-        trace.incrementMetric('tweets/saved')
+        // trace.incrementMetric('tweets/saved')
         ack()
       })
       .catch((err) => {
