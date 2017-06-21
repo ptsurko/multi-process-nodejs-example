@@ -3,11 +3,10 @@ version: "3"
 services:
   web:
     build:
-      context: .
+      context: web/.
     ports: 
       - "8080:8080"
     environment:
-      PROCESS_TYPE: web
       NODE_ENV: development
       REDIS_URI: redis:6379
       PORT: 8080
@@ -18,9 +17,8 @@ services:
 
   social-preprocessor:
     build:
-      context: .
+      context: social-preprocessor/.
     environment:
-      PROCESS_TYPE: social-preprocessor-worker
       NODE_ENV: development
       RABBITMQ_URI: "amqp://rabbitmq:5672"
       REDIS_URI: "redis:6379"
@@ -33,16 +31,13 @@ services:
 
   twitter-stream:
     build:
-      context: .
+      context: twitter-stream/.
     env_file:
       - twitter.env
     environment:
-      PROCESS_TYPE: "twitter-stream-worker"
       NODE_ENV: "development"
       TWITTER_TRACK: "trump"
       RABBITMQ_URI: "amqp://rabbitmq:5672"
-    
-    
     links:
       - rabbitmq
     depends_on:
@@ -57,4 +52,3 @@ services:
     image: redis
     ports: 
       - "6379:6379"
-  
